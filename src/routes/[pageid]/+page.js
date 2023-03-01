@@ -1,7 +1,7 @@
 export function load({ params }) {
-    return {
-      page: {
-       id: params.pageid
-      }
-    };
-  }
+	return {
+		page: {
+			slug: params.pageid
+		}
+	};
+}

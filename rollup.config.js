@@ -15,6 +15,10 @@ export default {
                 dest: 'public/vendor/bootstrap' 
             }]
         }),
+		svelte({
+			// Disable HMR
+			hot: false,
+		  }),
 
 
 };

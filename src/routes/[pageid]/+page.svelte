@@ -1,43 +1,52 @@
 <script>
 
 import { onMount } from 'svelte';
+import {ApiUrl} from '../../stores.js';
+import PageSection from '../../components/PageSection.svelte';
 export let data;
 
-const PagesApiURL = `http://localhost:1337/api/pages/${data.page.id}?populate=*`;
-
+const PagesApiURL = `${ApiUrl}/api/pages/?filters[slug][$eq]=${data.page.slug}&populate=*`;
 let pageDetails;
 
-onMount(async () => {
-  pageDetails = await getPages();
-});
-
-async function getPages() {
-  const response = await fetch(PagesApiURL);
-  return await response.json();
-}
+onMount(() => {
+    fetch(PagesApiURL)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok.');
+        }
+      })
+      .then(data => {
+         pageDetails = data;
+      })
+      .catch(error => {
+        console.error('There was a problem fetching the page data:', error);
+      });
+  });
 </script>
 
+<svelte:head>
+  <meta name="title" content="{pageDetails ? pageDetails.data[0].attributes.SEO.Title : 'Default title'}">
+  <meta name="description" content="{pageDetails ? pageDetails.data[0].attributes.SEO.Description : 'Default description'}">
+  <meta name="keywords" content="{pageDetails ? pageDetails.data[0].attributes.SEO.Keywords : 'Default keywords'}">
+</svelte:head>
 
-{#await getPages() then pagedetails}
-    <h1 class="pagetitle">{pagedetails.data.attributes.Title}</h1>
 
-    {#each pagedetails.data.attributes.sections.data as section}
-        <div class="section">{section.attributes.SectionName}</div>
-    {/each}
-{/await}
+{#if pageDetails}
+  <h1 class="pagetitle">{pageDetails.data[0].attributes.Title}</h1>
 
+  {#each pageDetails.data[0].attributes.sections.data as section}
+      <PageSection data={section} />
+  {/each}
+{/if}
 
 
 <style>
-  .pagetitle {
-        font-size: 2rem;
-        font-weight: 700;
-        margin: 20px 0;
+  h1.pagetitle {
+    font-size: 2rem;
+    font-weight: 200;
+    margin: 20px 0;
+    text-transform: uppercase;
   }
-    .section {
-        background-color: #f1f1f1;
-        padding: 20px;
-        margin: 20px 0;
-        border-radius: 10px;
-    }
 </style>

@@ -1,69 +1,43 @@
 <script>
-  import { onMount } from 'svelte';
+import { onMount } from 'svelte';
+import { navigation, navigationApiUrl } from '../stores.js';
 
-  const MenuApiURL = 'http://localhost:1337/api/navigation/render/1?type=TREE';
+import Header from '../components/Header.svelte';
+import Footer from '../components/Footer.svelte';
+import '../global.css'
 
-  let menu;
 
-  onMount(async () => {
-    const response = await fetch(MenuApiURL);
-    menu = await response.json();
-    return menu;
+
+// need to do this once instead of each time the layout is rendered
+onMount(async () => {
+        await fetchNavigation();
   });
+
+  const fetchNavigation = async () => {
+    const res = await fetch(navigationApiUrl);
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch navigation data (status ${res.status})`);
+    }
+
+    const data = await res.json();
+    navigation.set(data);
+
+  };
+
 </script>
 
+<Header />
 
-<header class="site-header sticky-top py-1">
-    <nav class="container d-flex flex-column flex-md-row justify-content-between">
-      <div class="py-2" href="/" aria-label="Logo">LOGO</div>
-
-      {#if menu}
-          {#each menu[0].items as item}
-          <a class="py-2 d-none d-md-inline-block" href="{item.path}" >{item.title}</a>
-          {/each}
-      {/if}
-    </nav>
-  </header>
-
-  <div class="container">
- 
+  <main class="flex-shrink-0">
+    <div class="container-fluid">
       <slot />
-
-  </div>
+    </div>
+  </main>
    
+<Footer />
 
-    <footer class="container py-5">
-        <div class="row">
-          <div class="col-12 col-md">
-           
-          </div>
-          <div class="col-6 col-md">
-            <h5>Features</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="/">Cool stuff</a></li>
-            
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="/">Resource name</a></li>
-   
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="/">Business</a></li>
 
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="link-secondary" href="/">Team</a></li>
+<style>
 
-            </ul>
-          </div>
-        </div>
-      </footer>
+</style>
