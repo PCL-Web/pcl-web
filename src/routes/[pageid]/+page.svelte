@@ -1,6 +1,5 @@
 <script>
-
-//import PageSection from '../../components/PageSection.svelte';
+  //import PageSection from './PageSection.svelte';
 export let data;
 $: ({pageData} = data);
 //$: console.log(pageData[0]);
@@ -36,5 +35,4 @@ $: ({pageData} = data);
     margin: 20px 0;
     text-transform: uppercase;
   }
-  
 </style>
