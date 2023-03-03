@@ -2,6 +2,7 @@
 import { onMount } from 'svelte';
 import { navigation, navigationApiUrl } from '../stores.js';
 
+
 import Header from '../components/Header.svelte';
 import Footer from '../components/Footer.svelte';
 import '../global.css'
@@ -39,5 +40,7 @@ onMount(async () => {
 
 
 <style>
-
+main {
+    margin-top: 60px;
+  }
 </style>

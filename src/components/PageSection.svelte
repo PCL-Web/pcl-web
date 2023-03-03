@@ -1,15 +1,17 @@
+
 <script>
 import { onMount } from 'svelte';
 import {ApiUrl} from '../stores.js';
 import Article from './Article.svelte';
 export let data;
 
-
 let SectionID = data.id;
 const SectionApiURL = `${ApiUrl}/api/sections/${SectionID}?populate=*`;
 let sectionDetails;
 
+
 onMount(() => {
+  console.log("Page section onMount");
   fetch(SectionApiURL)
     .then(response => {
       if (response.ok) {

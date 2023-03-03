@@ -1,6 +1,5 @@
 <script>
 import { navigation } from '../stores.js';
-console.log("nav", $navigation);
 </script>
 
 
@@ -16,7 +15,7 @@ console.log("nav", $navigation);
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             {#if $navigation}
                 {#each $navigation as item}
-                <li><a class="nav-link px-3 text-white" href="{item.path}"  rel="external" >{item.title}</a></li>
+                <li><a class="nav-link px-3 text-white" href="{item.path}" data-sveltekit-prefetch>{item.title}</a></li>
                 {/each}
             {/if}
           </ul>
