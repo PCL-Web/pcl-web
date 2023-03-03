@@ -1,6 +1,5 @@
 <script>
-
-//import PageSection from '../../components/PageSection.svelte';
+import { onMount } from 'svelte';
 export let data;
 $: ({pageData} = data);
 
