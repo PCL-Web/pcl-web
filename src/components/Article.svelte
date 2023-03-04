@@ -1,6 +1,6 @@
 <script>
-import { onMount } from 'svelte';
 import {ApiUrl, ImageUrl} from '../stores.js';
+import ActionButton from './ActionButton.svelte';
 export let content;
 
 if (!content) {
@@ -14,7 +14,6 @@ if (!content) {
         let positionArray = content.data.attributes.Position.split(",");
 
         if (positionArray.length > 1) {
-            
             positionArray[0] = positionArray[0].replace(/\s/g, "").trim().toLowerCase();
             positionArray[1] = positionArray[1].replace(/\s/g, "").trim().toLowerCase();
         } else {
@@ -25,26 +24,26 @@ if (!content) {
          positionOfImage = positionArray[1];
     }
 
-    let ArticleApiURL = `${ApiUrl}/api/articles/${content.data.id}?populate=*`;
-    let articleDetails;
 
-    onMount(() => {
-    fetch(ArticleApiURL)
-        .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Network response was not ok.');
-        }
-        })
-        .then(data => {
-            articleDetails = data;
-            //console.log(articleDetails);
-        })
-        .catch(error => {
-        console.error('There was a problem fetching the article data:', error);
-        });
-    });
+let articleDetails;
+let articleDetailsFetch;
+
+$: articleDetailsFetch = updateArticle(content).then(data => {articleDetails = data;}) // will run whenever data updates
+
+async function updateArticle(content) {
+  try {
+    const response = await fetch(`${ApiUrl}/api/articles/${content.data.id}?populate=*`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
+    }
+    return response.json();
+    
+  } catch (error) {
+    console.error('There was a problem fetching the page data:', error);
+  }
+}
+
+   
 
 
 </script>
@@ -55,11 +54,11 @@ if (!content) {
      <div class="articlecopy {positionOfCopy}">
         <h3 class="articletitle">{@html content.data.attributes.ArticleTitle}</h3>
         <div class="articletext">{@html content.data.attributes.ArticleText}</div>
+        <ActionButton content={content.data.id} />
     </div>
         <div class="articleimage {positionOfImage}">
             
             {#if articleDetails}
-
                 {#if articleDetails.data.attributes.Media.data}
                     <img src="{ImageUrl}{articleDetails.data.attributes.Media.data.attributes.formats.medium.url}" 
                         alt="{articleDetails.data.attributes.Media.data.attributes.alternativeText}"/>

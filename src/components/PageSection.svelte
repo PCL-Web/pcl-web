@@ -1,40 +1,34 @@
-
 <script>
-import { onMount } from 'svelte';
 import {ApiUrl} from '../stores.js';
 import Article from './Article.svelte';
 export let data;
 
-let SectionID = data.id;
-const SectionApiURL = `${ApiUrl}/api/sections/${SectionID}?populate=*`;
 let sectionDetails;
+let sectionDetailsFetch;
 
+$: sectionDetailsFetch = updateSection(data).then(data => {sectionDetails = data;}) // will run whenever data updates
 
-onMount(() => {
-  console.log("Page section onMount");
-  fetch(SectionApiURL)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Network response was not ok.');
-      }
-    })
-    .then(data => {
-        sectionDetails = data;
-    })
-    .catch(error => {
-      console.error('There was a problem fetching the page data:', error);
-    });
-});
+async function updateSection(section) {
+  try {
+    const response = await fetch(`${ApiUrl}/api/sections/${section.id}?populate=article`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
+    }
+    return response.json();
+    
+  } catch (error) {
+    console.error('There was a problem fetching the page data:', error);
+  }
+}
+
 
 </script>
 
 <section>
- {#if sectionDetails}
+  {#if sectionDetails}
     {#if sectionDetails.data.attributes.article}
     <Article content={sectionDetails.data.attributes.article} />
-    {/if}
+   {/if}
 {/if}
 </section>
 
