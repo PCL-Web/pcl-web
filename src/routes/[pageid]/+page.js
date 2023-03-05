@@ -8,6 +8,9 @@ export const load = async ({ fetch, params }) => {
 		const pageData = await pageRes.json();
 		return pageData.data;
 	};
+
+	const pageData = await fetchPage(params.pageid);
+
 	return {
 		pageData: pageData
 	};
