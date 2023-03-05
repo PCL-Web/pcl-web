@@ -1,20 +1,17 @@
-<script>
+<script> 
 import { onMount } from 'svelte';
 import { navigation, navigationApiUrl } from '../stores.js';
-
-
+import { goto } from '$app/navigation';
 import Header from '../components/Header.svelte';
 import Footer from '../components/Footer.svelte';
 import '../global.css'
 
-
-
-// need to do this once instead of each time the layout is rendered
 onMount(async () => {
         await fetchNavigation();
   });
 
   const fetchNavigation = async () => {
+
     const res = await fetch(navigationApiUrl);
 
     if (!res.ok) {
@@ -24,20 +21,24 @@ onMount(async () => {
     const data = await res.json();
     navigation.set(data);
 
+
+     let firstItem = $navigation[Object.keys($navigation)[0]];
+     if (firstItem.path) {
+      goto(firstItem.path);
+     }
+
+
   };
 
 </script>
 
 <Header />
-
   <main class="flex-shrink-0">
     <div class="container-fluid">
       <slot />
     </div>
   </main>
-   
 <Footer />
-
 
 <style>
 main {

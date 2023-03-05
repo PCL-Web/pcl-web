@@ -1,8 +1,8 @@
 <script>
 import PageSection from '../../components/PageSection.svelte';
-
 export let data;
 $: ({pageData} = data);
+
 </script>
 
 <svelte:head>
@@ -15,9 +15,8 @@ $: ({pageData} = data);
 
 <h1 class="pagetitle">{pageData[0].attributes.Title}</h1>
  
-  {#each pageData[0].attributes.sections.data as section (section.id)}
-  <h2>{section.attributes.SectionName}</h2>
-  <PageSection section={section}/>
+  {#each pageData[0].attributes.sections.data as section}
+       <PageSection data={section} />
   {/each}
 
 {/if}

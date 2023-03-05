@@ -1,34 +1,44 @@
-<!-- PageSection.svelte -->
-<script context="module">
-import { ApiUrl } from '../stores.js';
-
-export const load = async ({ fetch, section }) => {
-
-	const fetchSection = async (id) => {
-		let fetchSectionUrl = `${ApiUrl}/api/sections/${id}?populate=*`;
-		const sectionRes = await fetch(fetchSectionUrl);
-		const sectionData = await sectionRes.json();
-    console.log(fetchSectionUrl)
-		return sectionData;
-	};
-
-  console.log("section.id: " + section.id)
-	const sectionData = await fetchSection(section.id);
-
-	return {
-		sectionData: sectionData
-	};
-};
-
-export let section;
-</script>
-
 <script>
-import { page } from '$app/stores';
+import {ApiUrl} from '../stores.js';
+import Article from './Article.svelte';
+export let data;
 
-$: console.log($page)
-$: ({ sectionData } = $page);
+let sectionDetails;
+let sectionDetailsFetch;
 
-console.log(sectionData);
+$: sectionDetailsFetch = updateSection(data).then(data => {sectionDetails = data;}) // will run whenever data updates
+
+async function updateSection(section) {
+  try {
+    const response = await fetch(`${ApiUrl}/api/sections/${section.id}?populate=article`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok.');
+    }
+    return response.json();
+    
+  } catch (error) {
+    console.error('There was a problem fetching the page data:', error);
+  }
+}
+
+
 </script>
+
+<section>
+  {#if sectionDetails}
+    {#if sectionDetails.data.attributes.article}
+    <Article content={sectionDetails.data.attributes.article} />
+   {/if}
+{/if}
+</section>
+
+<style>
+section {
+    background-color: #f1f1f1;
+    padding: 0px;
+    margin-bottom:10px;
+    min-height:20vh;
+    width:auto;
+}
+</style>
 
