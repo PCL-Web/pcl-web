@@ -21,12 +21,11 @@ onMount(async () => {
     const data = await res.json();
     navigation.set(data);
 
-
+    // go to home page
      let firstItem = $navigation[Object.keys($navigation)[0]];
      if (firstItem.path) {
       goto(firstItem.path);
      }
-
 
   };
 

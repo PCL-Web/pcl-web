@@ -1,5 +1,7 @@
 <script>
-    import {ApiUrl} from '../stores.js';
+
+    export let actions;
+    $: console.log(actions);
 </script>
 
 <button>Action Button</button>
