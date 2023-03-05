@@ -2,7 +2,6 @@
 import { navigation } from '../stores.js';
 </script>
 
-
 <header>
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -26,14 +25,3 @@ import { navigation } from '../stores.js';
       </div>
     </nav>
   </header>
-
-
-
-
-
-
-
-  <style>
-
-
-  </style>
