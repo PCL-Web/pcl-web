@@ -7,45 +7,31 @@ if (!content) {
     throw new Error('Article component requires a content object');
 }
 
-    let positionOfCopy = "copyleft";
-    let positionOfImage = "imageright";
+let positionOfCopy = "copyleft";
+let positionOfImage = "imageright";
 
-    if (content.data.attributes.Position)  {
-        let positionArray = content.data.attributes.Position.split(",");
-
-        if (positionArray.length > 1) {
-            positionArray[0] = positionArray[0].replace(/\s/g, "").trim().toLowerCase();
-            positionArray[1] = positionArray[1].replace(/\s/g, "").trim().toLowerCase();
-        } else {
-            positionArray[0] = positionArray[0].replace(/\s/g, "").trim().toLowerCase();
-            positionArray[1] = "imagecenter";
-        }
-         positionOfCopy = positionArray[0];
-         positionOfImage = positionArray[1];
-    }
-
-
-let articleDetails;
-let articleDetailsFetch;
-
-$: articleDetailsFetch = updateArticle(content).then(data => {articleDetails = data;}) // will run whenever data updates
-
-async function updateArticle(content) {
-  try {
-    const response = await fetch(`${ApiUrl}/api/articles/${content.data.id}?populate=*`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok.');
-    }
-    return response.json();
-    
-  } catch (error) {
-    console.error('There was a problem fetching the page data:', error);
-  }
+if (content.data.attributes.Position)  {
+    const positionArray = content.data.attributes.Position.split(",").map(s => s.replace(/\s/g, "").trim().toLowerCase());
+    positionOfCopy = positionArray[0];
+    positionOfImage = positionArray[1] || "imagecenter";
 }
 
-   
+let articleDetails;
 
-
+$: {
+  (async () => {
+    try {
+      const response = await fetch(`${ApiUrl}/api/articles/${content.data.id}?populate=*`);
+      if (response.ok) {
+        articleDetails = await response.json();
+      } else {
+        throw new Error('Network response was not ok.');
+      }
+    } catch (error) {
+      console.error('There was a problem fetching the page data:', error);
+    }
+  })();
+}
 </script>
 
 
