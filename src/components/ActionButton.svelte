@@ -1,10 +1,8 @@
 <script>
 
-    export let actions;
-    $: console.log(actions);
 </script>
 
-<button>Action Button</button>
+<button><slot>Click here</slot></button>
 
 <style>
 button {

@@ -40,7 +40,7 @@ $: {
      <div class="articlecopy {positionOfCopy}">
         <h3 class="articletitle">{@html content.data.attributes.ArticleTitle}</h3>
         <div class="articletext">{@html content.data.attributes.ArticleText}</div>
-        <ActionButton actions={content.data.id} />
+        <ActionButton>Click here</ActionButton>
     </div>
         <div class="articleimage {positionOfImage}">
             
