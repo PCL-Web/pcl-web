@@ -24,7 +24,7 @@ async function updateSection(section) {
 
 </script>
 
-<section>
+<section class="gradback">
   {#if sectionDetails}
     {#if sectionDetails.data.attributes.article}
     <Article content={sectionDetails.data.attributes.article} />
@@ -34,11 +34,15 @@ async function updateSection(section) {
 
 <style>
 section {
-    background-color: #f1f1f1;
-    padding: 0px;
-    margin-bottom:10px;
+    padding: 60px 0px 0px 0px;
     min-height:20vh;
+    height:100vh;
     width:auto;
+    overflow:visible
+}
+
+.gradback{
+  background: linear-gradient(to left top, cyan, white);
 }
 </style>
 

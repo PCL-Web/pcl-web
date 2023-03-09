@@ -57,9 +57,7 @@ $: {
 
 <style>
  .articlecontainer {
-    background-color: #f1f1f1;
-    padding: 10px;
-    margin-bottom:10px;
+    padding: 10vw;
     min-height:20vh;
     width:auto;
     overflow: auto;

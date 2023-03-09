@@ -32,15 +32,7 @@ onMount(async () => {
 </script>
 
 <Header />
-  <main class="flex-shrink-0">
-    <div class="container-fluid">
+  <main>
       <slot />
-    </div>
   </main>
 <Footer />
-
-<style>
-main {
-    margin-top: 60px;
-  }
-</style>
