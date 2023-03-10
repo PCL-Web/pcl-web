@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+id {
+	display: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: 'Poppins', Helvetica, Roboto, Arial, sans-serif;
+	color: #1a4789;
+	font-weight: bolder;
+}
+h1 {
+	font-size: 2.5rem;
+
+	padding: 0;
+	margin: 0;
+}
+h1 span {
+	font-weight: 200 !important;
+}
+.content {
+	font-family: 'Poppins', sans-serif;
+	font-size: 0.8rem;
+	line-height: 2;
+	margin: 0;
+	max-width: 800px;
+	padding: 0;
+}
+
+/* rgba(109, 187, 217, 0.5), 50% opacity version of #6DBBD9 
+    rgba(223, 229, 237, 0.5) /* 50% opacity version of #DFE5ED */
+
+.navbar.show {
+	opacity: 1; /* Set the opacity to 1 when the navbar is shown */
+}
+.navbar-brand img {
+	max-width: 60%;
+	height: auto;
+	margin-left: 20px;
+}
+a.nav-link {
+	font-family: 'Poppins', sans-serif;
+	font-size: 0.8rem;
+	color: black !important;
+}
+.navbar-dark {
+	background-color: rgba(109, 187, 217, 0) !important;
+}
+.showBackground {
+	background-color: rgba(255, 255, 255, 0.5) !important;
+}
+button.demo {
+	background-color: #ff9100 !important;
+	border: 0px;
+	border-radius: 20px;
+	padding: 10px 20px;
+	color: white;
+	text-transform: uppercase;
+	font-size: 0.8em;
+	letter-spacing: 0.03em;
+}

@@ -1,29 +1,32 @@
 <script>
 import Section from '../../components/Section.svelte';
 export let data;
+
 $: ({pageData} = data);
+let sectionids = [];
+$: {
+  if (data.pageData) {
+    sectionids = data.pageData.attributes.section.map(section => section.id);
+  }
+  console.log(sectionids);
+}
 </script>
 
 <svelte:head>
-  <meta name="title" content="{pageData[0].attributes.SEO ? pageData[0].attributes.SEO.Title : 'Default title'}">
-  <meta name="description" content="{pageData[0].attributes.SEO ? pageData[0].attributes.SEO.Description : 'Default description'}">
-  <meta name="keywords" content="{pageData[0].attributes.SEO ? pageData[0].attributes.SEO.Keywords : 'Default keywords'}">
+  <meta name="title" content="{pageData.attributes.SEO ? pageData.attributes.SEO.Title : 'Default title'}">
+  <meta name="description" content="{pageData.attributes.SEO ? pageData.attributes.SEO.Description : 'Default description'}">
+  <meta name="keywords" content="{pageData.attributes.SEO ? pageData.attributes.SEO.Keywords : 'Default keywords'}">
 </svelte:head>
 
 {#if pageData}
- 
-  {#each pageData[0].attributes.sections.data as section}
-       <Section data={section} />
+ <!--section:  content, title, id -->
+{#each pageData.attributes.section as section}
+       <Section data={section} sectionids={sectionids} />
   {/each}
 
 {/if}
 
 
  <style>
-  h1.pagetitle {
-    font-size: 2rem;
-    font-weight: 200;
-    margin: 20px 0;
-    text-transform: uppercase;
-  }
+
 </style>

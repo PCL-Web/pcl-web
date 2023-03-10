@@ -1,6 +1,6 @@
 <script>
 import {ApiUrl, ImageUrl} from '../stores.js';
-import ActionButton from './ActionButton.svelte';
+import Button from './Button.svelte';
 export let content;
 
 if (!content) {
@@ -40,7 +40,7 @@ $: {
      <div class="articlecopy {positionOfCopy}">
         <h3 class="articletitle">{@html content.data.attributes.ArticleTitle}</h3>
         <div class="articletext">{@html content.data.attributes.ArticleText}</div>
-        <ActionButton>Click here</ActionButton>
+        <Button>Click here</Button>
     </div>
         <div class="articleimage {positionOfImage}">
             

@@ -1,6 +1,7 @@
 {
 	"name": "pcl-web",
 	"version": "0.0.1",
+	"homepage": "/home",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
